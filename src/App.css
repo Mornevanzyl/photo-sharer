@@ -209,7 +209,8 @@ label:hover {
 .social {
   border: 1px solid var(--off-white);
   border-radius: 50%;
-  padding: 5px;
+  padding: 0.6rem;
+  margin: 0 0.2rem;
   background: white;
   color: var(--secondary);
   height: 2.2rem;

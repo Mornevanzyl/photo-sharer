@@ -1,10 +1,10 @@
 import React, { useRef, useState, useCallback, useContext } from "react";
 import { withRouter, Redirect } from "react-router";
 import { Link } from 'react-router-dom';
-import { auth, google, facebook } from '../../firebase';
+import { auth, google, facebook, twitter } from '../../firebase';
 import { AuthContext } from './AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebookF, faGooglePlusG, faLinkedinIn } from '@fortawesome/free-brands-svg-icons'
+import { faFacebookF, faGooglePlusG, faTwitter } from '@fortawesome/free-brands-svg-icons'
 
 
 const Signin = ({ history }) => {
@@ -51,28 +51,18 @@ const Signin = ({ history }) => {
     [history]
   );
 
-
-  // firebase.auth()
-  // .signInWithPopup(provider)
-  // .then((result) => {
-  //   /** @type {firebase.auth.OAuthCredential} */
-  //   var credential = result.credential;
-
-  //   // This gives you a Google Access Token. You can use it to access the Google API.
-  //   var token = credential.accessToken;
-  //   // The signed-in user info.
-  //   var user = result.user;
-  //   // ...
-  // }).catch((error) => {
-  //   // Handle Errors here.
-  //   var errorCode = error.code;
-  //   var errorMessage = error.message;
-  //   // The email of the user's account used.
-  //   var email = error.email;
-  //   // The firebase.auth.AuthCredential type that was used.
-  //   var credential = error.credential;
-  //   // ...
-  // });
+  const handleTwitterSignIn = useCallback(
+    async event => {
+      event.preventDefault();
+      try {
+        await auth.signInWithPopup(twitter);
+        history.push("/");
+      } catch (error) {
+        alert(error);
+      }
+    },
+    [history]
+  );
 
   const { currentUser } = useContext(AuthContext);
 
@@ -89,9 +79,7 @@ const Signin = ({ history }) => {
                     <div className={"social-container"}>
                         <button className="social" onClick={handleFacebookSignIn} ><FontAwesomeIcon icon={faFacebookF} /></button>
                         <button className="social" onClick={handleGoogleSignIn} ><FontAwesomeIcon icon={faGooglePlusG} /></button>
-                        {/* <a href="#" className={"social"}><FontAwesomeIcon icon={faFacebookF} /></a>
-                        <a href="#" className={"social"}><FontAwesomeIcon icon={faGooglePlusG} /></a>
-                        <a href="#" className={"social"}><FontAwesomeIcon icon={faLinkedinIn} /></a> */}
+                        <button className="social" onClick={handleTwitterSignIn} ><FontAwesomeIcon icon={faTwitter} /></button>
                     </div>
                     <span className={error ? 'alert' : ''} >{error ? error : 'or use your account'}</span>
                     <input type="email" placeholder="Email" ref={emailRef} required />

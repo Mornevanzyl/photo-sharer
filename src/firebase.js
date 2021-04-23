@@ -16,7 +16,8 @@ const auth = app.auth();
 const storage = app.storage();
 const database = app.firestore();
 const google = new firebase.auth.GoogleAuthProvider();
-const facebook = new firebase.auth.FacebookAuthProvider()
+const facebook = new firebase.auth.FacebookAuthProvider();
+const twitter = new firebase.auth.TwitterAuthProvider();
 const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 
-export { auth, google, facebook, storage, database, timestamp };
+export { auth, google, facebook, twitter, storage, database, timestamp };
