@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookF, faGooglePlusG, faLinkedinIn } from '@fortawesome/free-brands-svg-icons'
 import { withRouter } from "react-router";
 import { Link } from 'react-router-dom';
-import app from '../../firebase';
+import { auth } from '../../firebase';
 
 const Register = ({ history }) => {
   const nameRef = useRef();
@@ -23,9 +23,7 @@ const Register = ({ history }) => {
     try {
       setError('');
       setLoading(true);
-      await app
-        .auth()
-        .createUserWithEmailAndPassword(emailRef.current.value, passwordRef.current.value);
+      await auth.createUserWithEmailAndPassword(emailRef.current.value, passwordRef.current.value);
       history.push("/");
     } catch (error) {
       setError(error);

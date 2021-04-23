@@ -12,10 +12,11 @@ const app = firebase.initializeApp({
     appId: process.env.REACT_APP_FIREBASE_APP_ID
 })
 
-// const auth = app.auth();
-// const storage = app.storage();
-// const database = app.firestore();
-// const timestamp = firebase.firestore.FieldValue.serverTimestamp;
+const auth = app.auth();
+const storage = app.storage();
+const database = app.firestore();
+const google = new firebase.auth.GoogleAuthProvider();
+const facebook = new firebase.auth.FacebookAuthProvider()
+const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 
-// export { storage, database, timestamp };
-export default app; 
+export { auth, google, facebook, storage, database, timestamp };

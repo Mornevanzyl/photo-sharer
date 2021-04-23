@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import firebase from "firebase/app";
-import app from '../../firebase';
+import { database, storage, timestamp } from '../../firebase';
 import { AuthContext } from '../authentication/AuthContext';
 
 export default function useStorage(file) {
@@ -10,9 +10,9 @@ export default function useStorage(file) {
   const { currentUser } = useContext(AuthContext);
 
 
-  const storage = app.storage();
-  const database = app.firestore();
-  const timestamp = firebase.firestore.FieldValue.serverTimestamp;
+  // const storage = app.storage();
+  // const database = app.firestore();
+  // const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 
   useEffect(() => {
     const storageRef = storage.ref(file.name);

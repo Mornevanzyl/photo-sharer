@@ -1,7 +1,7 @@
 import React, { useRef, useState, useCallback, useContext } from "react";
 import { withRouter, Redirect } from "react-router";
 import { Link } from 'react-router-dom';
-import app from '../../firebase';
+import { auth, google, facebook } from '../../firebase';
 import { AuthContext } from './AuthContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookF, faGooglePlusG, faLinkedinIn } from '@fortawesome/free-brands-svg-icons'
@@ -14,12 +14,9 @@ const Signin = ({ history }) => {
   const [loading, setLoading] = useState(false);
 
   const handleSignIn = useCallback(
-    async event => {
-      event.preventDefault();
+    async () => {
       try {
-        await app
-          .auth()
-          .signInWithEmailAndPassword(emailRef.current.value, passwordRef.current.value);
+        await auth.signInWithEmailAndPassword(emailRef.current.value, passwordRef.current.value);
         history.push("/");
       } catch (error) {
         alert(error);
@@ -27,6 +24,55 @@ const Signin = ({ history }) => {
     },
     [history]
   );
+
+  const handleGoogleSignIn = useCallback(
+    async event => {
+      event.preventDefault();
+      try {
+        await auth.signInWithPopup(google);
+        history.push("/");
+      } catch (error) {
+        alert(error);
+      }
+    },
+    [history]
+  );
+
+  const handleFacebookSignIn = useCallback(
+    async event => {
+      event.preventDefault();
+      try {
+        await auth.signInWithPopup(facebook);
+        history.push("/");
+      } catch (error) {
+        alert(error);
+      }
+    },
+    [history]
+  );
+
+
+  // firebase.auth()
+  // .signInWithPopup(provider)
+  // .then((result) => {
+  //   /** @type {firebase.auth.OAuthCredential} */
+  //   var credential = result.credential;
+
+  //   // This gives you a Google Access Token. You can use it to access the Google API.
+  //   var token = credential.accessToken;
+  //   // The signed-in user info.
+  //   var user = result.user;
+  //   // ...
+  // }).catch((error) => {
+  //   // Handle Errors here.
+  //   var errorCode = error.code;
+  //   var errorMessage = error.message;
+  //   // The email of the user's account used.
+  //   var email = error.email;
+  //   // The firebase.auth.AuthCredential type that was used.
+  //   var credential = error.credential;
+  //   // ...
+  // });
 
   const { currentUser } = useContext(AuthContext);
 
@@ -41,9 +87,11 @@ const Signin = ({ history }) => {
                 <form onSubmit={handleSignIn}>
                     <h1>Sign in</h1>
                     <div className={"social-container"}>
-                        <a href="#" className={"social"}><FontAwesomeIcon icon={faFacebookF} /></a>
+                        <button className="social" onClick={handleFacebookSignIn} ><FontAwesomeIcon icon={faFacebookF} /></button>
+                        <button className="social" onClick={handleGoogleSignIn} ><FontAwesomeIcon icon={faGooglePlusG} /></button>
+                        {/* <a href="#" className={"social"}><FontAwesomeIcon icon={faFacebookF} /></a>
                         <a href="#" className={"social"}><FontAwesomeIcon icon={faGooglePlusG} /></a>
-                        <a href="#" className={"social"}><FontAwesomeIcon icon={faLinkedinIn} /></a>
+                        <a href="#" className={"social"}><FontAwesomeIcon icon={faLinkedinIn} /></a> */}
                     </div>
                     <span className={error ? 'alert' : ''} >{error ? error : 'or use your account'}</span>
                     <input type="email" placeholder="Email" ref={emailRef} required />

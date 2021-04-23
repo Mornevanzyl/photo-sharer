@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useContext } from 'react'
 import { Link, useHistory } from 'react-router-dom';
-import app from '../../firebase';
+import { auth } from '../../firebase';
 import { withRouter } from "react-router";
 import { AuthContext } from './AuthContext';
 
@@ -14,9 +14,7 @@ const Profile = ({ history }) => {
 
     try {
       setError('');
-      await app
-        .auth()
-        .signOut();
+      await auth.signOut();
       history.push("/");
     } catch (error) {
       setError(error);

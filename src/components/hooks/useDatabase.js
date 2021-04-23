@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import app from '../../firebase';
+import { database } from '../../firebase';
 
 export default function useDatabase(collection) {
   const [docs, setDocs] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = app.firestore().collection(collection)
+    const unsubscribe = database.collection(collection)
       .orderBy('createdAt', 'desc')
       .onSnapshot((snap) => {
         let documents = [];
