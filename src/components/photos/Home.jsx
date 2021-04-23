@@ -1,13 +1,25 @@
-import React from "react";
-import app from '../../firebase';
+import React, { useState, useContext } from 'react'
+import { AuthContext } from '../authentication/AuthContext';
+import ImageGrid from './ImageGrid'
+import Modal from './Modal'
+import Navbar from './Navbar'
+import UploadForm from './UploadForm'
 
-const Home = () => {
+export default function Home() {
+  const [selectedImage, setSelectedImage] = useState(null);
+  const { currentUser } = useContext(AuthContext);
+
   return (
-    <>
-      <h1>Home</h1>
-      <button onClick={() => app.auth().signOut()}>Sign out</button>
-    </>
-  );
-};
+    <div className={"photo-container"}>
+      <div className={"photos"}>
+        <Navbar />
+        <ImageGrid setSelectedImage={setSelectedImage} />
+        { selectedImage && <Modal selectedImage={selectedImage} setSelectedImage={setSelectedImage} /> }
+      </div>
+      <div className={"photos-status"}>
+        <UploadForm />
+      </div>
+    </div>
+  )
+}
 
-export default Home;

@@ -1,33 +1,340 @@
-.App {
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&family=Satisfy&display=swap");
+
+:root {
+  --bg-light: #f6f5f7;
+  --dark-grey: #333;
+  --off-white: #ddd;
+  --light-grey: #eee;
+  --btn-primary: #ff4b2b;
+  --overlay-dark: #ff4b2b;
+  --overlay-light: #ff416c;
+
+  /* Photo Section */
+  --primary: #efb6b2;
+  --secondary: #4e4e4e;
+  --error: #ff4a4a;
+
+  --mobile-width: calc(100vw / 3);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background: var(--bg-light);
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: -1.5rem 0 3rem; */
+}
+
+p {
+  font-size: 0.8rem;
+  font-weight: 100;
+  line-height: 1.3rem;
+  letter-spacing: 0.5px;
+  margin: 1.3rem 0 2rem;
+}
+
+span {
+  font-size: 0.7rem;
+}
+
+span.alert {
+  color: var(--btn-primary);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+a {
+  color: var(--dark-grey);
+  font-size: 0.8rem;
+  text-decoration: none;
+  margin: 1rem 0;
+}
+
+form {
+  margin: 2rem auto 0.6rem;
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+label input {
+  height: 0;
+  width: 0;
+  opacity: 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+label {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--secondary);
+  border-radius: 50%;
+  margin: 0.6rem auto;
+  color: var(--secondary);
+}
+
+label span {
+  line-height: 1.93rem;
+  font-size: 1.5rem;
+  padding-left: 1px;
+  cursor: pointer;
+}
+
+label:hover {
+  background: var(--secondary);
+  color: white;
+}
+
+.photo-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.photos,
+.photos-status {
+  width: 960px;
+  margin: 0 auto;
+}
+
+.photos {
+  height: 90vh;
+  height: 90vh;
+  position: relative;
+}
+
+.photos-status {
+  position: fixed;
+  background: rgba(246, 245, 247, 0.9);
+  height: 10vh;
+  bottom: 0;
+}
+
+.navbar {
+  background: rgba(246, 245, 247, 0.9);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  width: 960px;
+  z-index: 100;
+  color: var(--secondary);
+  padding: 0.3rem 1rem;
+}
+
+.menu {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.logo {
+  margin: 0;
+  font-size: 2rem;
+  font-family: "Satisfy", cursive;
+  transform: translateY(5px);
+}
+
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 100vh;
+}
+
+.auth-container {
+  background: white;
+  border-radius: 0.6rem;
+  box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.25),
+    0 0.6rem 0.6rem rgba(0, 0, 0, 0.22);
+  /* position: relative; */
+  /* overflow: hidden; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 384px;
+  max-width: 100%;
+  min-height: 480px;
+}
+
+/* .form-container {
+  border: 1px solid brown;
+
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  transition: all 0.6s ease-in-out;
+} */
+
+.form-container form {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  padding: 0 3rem;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transform: translateY(-0.8rem);
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  padding: 0 3rem;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.social-container {
+  margin: 1.2rem 0;
+}
+
+.social-container a {
+  border: 1px solid var(--off-white);
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0.3rem;
+  height: 2.2rem;
+  width: 2.2rem;
+}
+
+.form-container input {
+  background: var(--light-grey);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.7rem;
+  margin: 0.5rem 0;
+  width: 100%;
+}
+
+.form-container span {
+  margin-bottom: 0.5rem;
+}
+
+button {
+  border-radius: 1.2rem;
+  margin: 1rem 0 0.6rem;
+  border: 1px solid var(--btn-primary);
+  background: var(--btn-primary);
   color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 0.7rem 2.7rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.8s ease-in;
 }
 
-.App-link {
-  color: #61dafb;
+button:active {
+  transform: scale(0.95);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+button:focus {
+  outline: none;
+}
+
+button.ghost {
+  background: transparent;
+  border-color: white;
+}
+
+.progress-bar {
+  height: 5px;
+  background: var(--primary);
+  margin-top: 1.2rem;
+}
+
+.img-grid {
+  /* margin: 1.2rem auto; */
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  position: absolute;
+  top: 3.5rem;
+}
+
+.img-wrap {
+  /* overflow: hidden;
+  height: 0;
+  padding: 50% 0;
+  position: relative;
+  opacity: 0.8; */
+  position: relative;
+  overflow: hidden;
+  width: 240px;
+  height: 240px;
+  opacity: 1;
+}
+
+.img-wrap img {
+  /* min-width: 100%;
+  min-height: 100%;
+  max-width: 150%;
+  position: absolute;
+  top: 0;
+  left: 0; */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 101;
+}
+
+.backdrop img {
+  display: block;
+  max-width: 60%;
+  max-height: 80%;
+  margin: 3.5rem auto;
+  box-shadow: 3px 5px 7px rgba(0, 0, 0, 0.5);
+  border: 3px solid white;
+}
+
+@media only screen and (max-width: 768px) {
+  .img-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
-  to {
-    transform: rotate(360deg);
+  .photos,
+  .photos-status {
+    width: 100vw;
+    margin: 0 auto;
+  }
+  .img-wrap {
+    position: relative;
+    overflow: hidden;
+    width: var(--mobile-width);
+    height: var(--mobile-width);
+    opacity: 1;
+  }
+  .navbar {
+    width: 100vw;
   }
 }
