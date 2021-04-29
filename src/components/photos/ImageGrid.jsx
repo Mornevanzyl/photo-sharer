@@ -1,9 +1,14 @@
-import React from 'react'
-import useDatabase from '../hooks/useDatabase'
+import React, { useContext } from 'react';
+import useDatabase from '../hooks/useDatabase';
+import { AuthContext } from '../authentication/AuthContext';
 import { motion } from 'framer-motion';
 
-export default function ImageGrid({ setSelectedImage }) {
-  const { docs } = useDatabase('images');
+export default function ImageGrid({ setSelectedImage, allImages }) {
+  const { currentUser } = useContext(AuthContext);
+
+  const user = allImages ? null : currentUser.uid;
+
+  const { docs } = useDatabase('images', user);
 
   return (
     <div className={"img-grid"}>

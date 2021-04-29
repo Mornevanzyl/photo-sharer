@@ -14,13 +14,17 @@ const Signin = ({ history }) => {
   const [loading, setLoading] = useState(false);
 
   const handleSignIn = useCallback(
-    async () => {
+    async event => {
+      event.preventDefault();
       try {
+        setError('');
+        setLoading(true);
         await auth.signInWithEmailAndPassword(emailRef.current.value, passwordRef.current.value);
         history.push("/");
-      } catch (error) {
-        alert(error);
+      } catch (err) {
+        setError(err.message);
       }
+      setLoading(false);
     },
     [history]
   );
@@ -29,11 +33,14 @@ const Signin = ({ history }) => {
     async event => {
       event.preventDefault();
       try {
+        setError('');
+        setLoading(true);
         await auth.signInWithPopup(google);
         history.push("/");
-      } catch (error) {
-        alert(error);
+      } catch (err) {
+        setError(err.message);
       }
+      setLoading(false);
     },
     [history]
   );
@@ -41,12 +48,16 @@ const Signin = ({ history }) => {
   const handleFacebookSignIn = useCallback(
     async event => {
       event.preventDefault();
+
       try {
+        setError('');
+        setLoading(true);
         await auth.signInWithPopup(facebook);
         history.push("/");
-      } catch (error) {
-        alert(error);
+      } catch (err) {
+        setError(err.message);
       }
+      setLoading(false);
     },
     [history]
   );
@@ -55,11 +66,14 @@ const Signin = ({ history }) => {
     async event => {
       event.preventDefault();
       try {
+        setError('');
+        setLoading(true);
         await auth.signInWithPopup(twitter);
         history.push("/");
-      } catch (error) {
-        alert(error);
+      } catch (err) {
+        setError(err.message);
       }
+      setLoading(false);
     },
     [history]
   );
@@ -74,20 +88,20 @@ const Signin = ({ history }) => {
     <div className="container">
         <div className={"auth-container"} id="container">
             <div className={"form-container"}>
+                <h1>Sign in</h1>
+                <div className={"social-container"}>
+                    <button className="social" onClick={handleFacebookSignIn} ><FontAwesomeIcon icon={faFacebookF} /></button>
+                    <button className="social" onClick={handleGoogleSignIn} ><FontAwesomeIcon icon={faGooglePlusG} /></button>
+                    <button className="social" onClick={handleTwitterSignIn} ><FontAwesomeIcon icon={faTwitter} /></button>
+                </div>
                 <form onSubmit={handleSignIn}>
-                    <h1>Sign in</h1>
-                    <div className={"social-container"}>
-                        <button className="social" onClick={handleFacebookSignIn} ><FontAwesomeIcon icon={faFacebookF} /></button>
-                        <button className="social" onClick={handleGoogleSignIn} ><FontAwesomeIcon icon={faGooglePlusG} /></button>
-                        <button className="social" onClick={handleTwitterSignIn} ><FontAwesomeIcon icon={faTwitter} /></button>
-                    </div>
-                    <span className={error ? 'alert' : ''} >{error ? error : 'or use your account'}</span>
-                    <input type="email" placeholder="Email" ref={emailRef} required />
-                    <input type="password" placeholder="Password" ref={passwordRef} />
+                    <p className={error ? 'alert' : ''} >{error ? error : 'or use your account'}</p>
+                    <input type="email" placeholder="Email*" ref={emailRef} required />
+                    <input type="password" placeholder="Password*" ref={passwordRef} />
                     <button type="submit" disabled={loading}>Sign In</button>
-                    <Link to='/forgot-password'>Forgot your password?</Link>
-                    <Link to='/signup'>New here? Join the community</Link>
                 </form>
+                <Link to='/forgot-password'>Forgot your password?</Link>
+                <Link to='/signup'>New here? Join the community</Link>
             </div>
         </div>
     </div>
